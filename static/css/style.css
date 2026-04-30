@@ -1,0 +1,3 @@
+/* Tailwind CDN is used for all styling in templates.
+   This file is kept for any future custom overrides. */
+*, *::before, *::after { box-sizing: border-box; }

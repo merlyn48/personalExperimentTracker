@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Create Account — Experimentr</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * { font-family: 'DM Sans', sans-serif; }
+        .display { font-family: 'Playfair Display', serif; }
+        body { background: #080b12; color: #e8e4dc; }
+        .grain {
+            position: fixed; inset: 0; pointer-events: none; z-index: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+            opacity: 0.4;
+        }
+        .gold { color: #c9a96e; }
+        .card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            backdrop-filter: blur(20px);
+        }
+        .input-field {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: #e8e4dc;
+            transition: all 0.3s;
+            width: 100%; padding: 14px 16px;
+            border-radius: 10px; font-size: 0.95rem; outline: none;
+        }
+        .input-field:focus {
+            border-color: rgba(201,169,110,0.6);
+            background: rgba(201,169,110,0.05);
+            box-shadow: 0 0 0 3px rgba(201,169,110,0.1);
+        }
+        .input-field::placeholder { color: rgba(255,255,255,0.25); }
+        .btn-gold {
+            background: linear-gradient(135deg, #c9a96e, #a07840);
+            transition: all 0.3s ease;
+            box-shadow: 0 0 40px rgba(201,169,110,0.2);
+            width: 100%; padding: 14px; border-radius: 10px;
+            font-weight: 600; font-size: 0.95rem; letter-spacing: 0.05em;
+            color: #1a1006; cursor: pointer; border: none;
+        }
+        .btn-gold:hover { box-shadow: 0 0 60px rgba(201,169,110,0.45); transform: translateY(-1px); }
+        .flash { background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3); color: #fca5a5; padding: 10px 14px; border-radius: 8px; font-size: 0.85rem; margin-bottom: 16px; }
+        @keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+        .fade-up { animation: fadeUp 0.7s ease forwards; }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center">
+<div class="grain"></div>
+<div class="absolute w-80 h-80 rounded-full bg-amber-800 opacity-10 blur-3xl bottom-1/4 left-0 pointer-events-none"></div>
+
+<div class="relative z-10 w-full max-w-sm px-4">
+    <div class="text-center mb-8 fade-up">
+        <a href="/" class="display text-2xl font-bold gold">Experimentr</a>
+        <p class="text-stone-400 text-sm mt-2">Start your first experiment today.</p>
+    </div>
+
+    <div class="card p-8 rounded-2xl fade-up" style="animation-delay:0.1s;">
+        <h2 class="display text-2xl font-bold text-white mb-6">Create Account</h2>
+
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}{% for msg in messages %}<p class="flash">{{ msg }}</p>{% endfor %}{% endif %}
+        {% endwith %}
+
+        <form method="POST" action="/register" class="space-y-4">
+            <div>
+                <label class="text-xs uppercase tracking-widest text-stone-500 block mb-2">Email</label>
+                <input type="email" name="email" placeholder="you@example.com" required class="input-field">
+            </div>
+            <div>
+                <label class="text-xs uppercase tracking-widest text-stone-500 block mb-2">Password</label>
+                <input type="password" name="password" placeholder="••••••••" required class="input-field">
+            </div>
+            <div class="pt-2">
+                <button type="submit" class="btn-gold">Create Account</button>
+            </div>
+        </form>
+
+        <p class="text-center text-sm text-stone-500 mt-6">
+            Already a member? <a href="/login" class="gold hover:underline">Sign in</a>
+        </p>
+    </div>
+</div>
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

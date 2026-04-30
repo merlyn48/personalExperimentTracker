@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Analytics — Experimentr</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * { font-family: 'DM Sans', sans-serif; }
+        .display { font-family: 'Playfair Display', serif; }
+        body { background: #080b12; color: #e8e4dc; }
+        .grain { position: fixed; inset: 0; pointer-events: none; z-index: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+            opacity: 0.4; }
+        .gold { color: #c9a96e; }
+        .sidebar { background: rgba(255,255,255,0.02); border-right: 1px solid rgba(255,255,255,0.06); }
+        .nav-link { display: flex; align-items: center; gap: 12px; padding: 11px 16px; border-radius: 10px; font-size: 0.9rem; color: #78716c; transition: all 0.2s; text-decoration: none; }
+        .nav-link:hover { background: rgba(201,169,110,0.08); color: #c9a96e; }
+        .nav-link.active { background: rgba(201,169,110,0.12); color: #c9a96e; }
+        .card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); border-radius: 16px; padding: 28px; }
+        .progress-track { background: rgba(255,255,255,0.06); border-radius: 999px; height: 6px; overflow: hidden; }
+        .progress-fill { background: linear-gradient(90deg, #c9a96e, #a07840); border-radius: 999px; height: 100%; transition: width 1s ease; }
+        @keyframes fadeUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+        .fade-up { animation: fadeUp 0.6s ease forwards; }
+    </style>
+</head>
+<body class="min-h-screen flex">
+<div class="grain"></div>
+<div class="absolute w-96 h-96 rounded-full bg-amber-800 opacity-5 blur-3xl bottom-0 left-1/3 pointer-events-none"></div>
+
+<!-- Sidebar -->
+<aside class="sidebar relative z-10 w-60 min-h-screen flex flex-col py-8 px-4 flex-shrink-0">
+    <a href="/" class="display text-xl font-bold gold px-4 mb-10 block">Experimentr</a>
+    <nav class="flex flex-col gap-1 flex-1">
+        <a href="/dashboard" class="nav-link"><span>⬡</span> Dashboard</a>
+        <a href="/experiment" class="nav-link"><span>🧪</span> Experiments</a>
+        <a href="/analytics" class="nav-link active"><span>📈</span> Analytics</a>
+    </nav>
+    <div class="px-4 pt-6 border-t border-white border-opacity-5">
+        <a href="/logout" class="nav-link text-red-400 hover:text-red-300 hover:bg-red-900 hover:bg-opacity-20"><span>↩</span> Sign Out</a>
+    </div>
+</aside>
+
+<!-- Main -->
+<main class="relative z-10 flex-1 p-10 overflow-y-auto">
+    <div class="max-w-4xl mx-auto">
+        <div class="fade-up mb-10">
+            <p class="text-xs uppercase tracking-widest text-stone-500 mb-1">Insights</p>
+            <h1 class="display text-4xl font-bold text-white">Analytics</h1>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-6">
+            <!-- Progress card -->
+            <div class="card fade-up" style="animation-delay:0.1s">
+                <h2 class="display text-lg font-bold text-white mb-6">Progress Overview</h2>
+                <div class="space-y-5">
+                    <div>
+                        <div class="flex justify-between text-sm mb-2">
+                            <span class="text-stone-300">Workout</span>
+                            <span class="gold font-semibold">80%</span>
+                        </div>
+                        <div class="progress-track"><div class="progress-fill" style="width:80%"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-sm mb-2">
+                            <span class="text-stone-300">Reading</span>
+                            <span class="gold font-semibold">60%</span>
+                        </div>
+                        <div class="progress-track"><div class="progress-fill" style="width:60%"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-sm mb-2">
+                            <span class="text-stone-300">Meditation</span>
+                            <span class="gold font-semibold">45%</span>
+                        </div>
+                        <div class="progress-track"><div class="progress-fill" style="width:45%"></div></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Success rate card -->
+            <div class="card fade-up" style="animation-delay:0.2s">
+                <h2 class="display text-lg font-bold text-white mb-6">Success Rates</h2>
+                <div class="space-y-4">
+                    <div class="flex justify-between items-center p-4 rounded-xl" style="background:rgba(201,169,110,0.06);border:1px solid rgba(201,169,110,0.15)">
+                        <div>
+                            <p class="text-white font-medium">Workout</p>
+                            <p class="text-stone-500 text-xs mt-0.5">Last 30 days</p>
+                        </div>
+                        <span class="display text-3xl font-bold gold">80%</span>
+                    </div>
+                    <div class="flex justify-between items-center p-4 rounded-xl" style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06)">
+                        <div>
+                            <p class="text-white font-medium">Reading</p>
+                            <p class="text-stone-500 text-xs mt-0.5">Last 30 days</p>
+                        </div>
+                        <span class="display text-3xl font-bold text-stone-300">60%</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Placeholder chart area -->
+            <div class="card md:col-span-2 fade-up" style="animation-delay:0.3s">
+                <h2 class="display text-lg font-bold text-white mb-2">Streak Timeline</h2>
+                <p class="text-stone-500 text-sm mb-6">Daily consistency over the past two weeks</p>
+                <div class="flex gap-2 items-end h-24">
+                    {% set heights = [60, 90, 40, 100, 80, 70, 100, 55, 90, 85, 30, 100, 75, 95] %}
+                    {% for h in heights %}
+                    <div class="flex-1 rounded-sm" style="height:{{ h }}%;background:linear-gradient(180deg,#c9a96e,#7a5c2a);opacity:{{ 0.4 + h/200 }}"></div>
+                    {% endfor %}
+                </div>
+                <div class="flex justify-between mt-2 text-xs text-stone-600">
+                    <span>14 days ago</span><span>Today</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>
