@@ -5,3 +5,4 @@ flask-jwt-extended
 flask-login
 flask-mail
 apscheduler
+gunicorn
