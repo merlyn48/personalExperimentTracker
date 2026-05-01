@@ -2,11 +2,12 @@ from flask import Blueprint, render_template, jsonify
 from flask_login import login_required, current_user
 from models.experiment import Experiment
 from models.user import User
+from models.entry import Entry
 from datetime import date
 
 dash_bp = Blueprint('dashboard', __name__)
 
-# 🔹 Home route (fixes "Not Found")
+# 🔹 Home route
 @dash_bp.route('/')
 def home():
     return render_template('home.html')
@@ -41,8 +42,15 @@ def analytics():
     return render_template('analytics.html')
 
 
-# 🔹 Test DB route
+# 🔹 Test DB route (UPDATED)
 @dash_bp.route('/test-db')
 def test_db():
     users = User.query.all()
-    return jsonify({"users": [u.email for u in users]})
+    experiments = Experiment.query.all()
+    entries = Entry.query.all()
+
+    return jsonify({
+        "users": [u.email for u in users],
+        "experiments": [e.title for e in experiments],
+        "entries": [e.content for e in entries]
+    })
