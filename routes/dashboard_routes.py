@@ -42,15 +42,18 @@ def analytics():
     return render_template('analytics.html')
 
 
-# 🔹 Test DB route (UPDATED)
+# 🔹 Test DB route (safe version)
 @dash_bp.route('/test-db')
 def test_db():
-    users = User.query.all()
-    experiments = Experiment.query.all()
-    entries = Entry.query.all()
+    try:
+        users = User.query.all()
+        experiments = Experiment.query.all()
+        entries = Entry.query.all()
 
-    return jsonify({
-        "users": [u.email for u in users],
-        "experiments": [e.title for e in experiments],
-        "entries": [e.content for e in entries]
-    })
+        return jsonify({
+            "users": [u.email for u in users],
+            "experiments": [e.title if e.title else "No Title" for e in experiments],
+            "entries": [e.content if e.content else "No Content" for e in entries]
+        })
+    except Exception as e:
+        return jsonify({"error": str(e)})
